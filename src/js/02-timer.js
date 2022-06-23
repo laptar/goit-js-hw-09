@@ -23,10 +23,14 @@ flatpickr('#datetime-picker', {
     if (selectedDates[0] > new Date()) {
       endDate = selectedDates[0];
       startBtn.disabled = false;
-      Notiflix.Notify.success('Correct date. Please click the start button.');
+      Notiflix.Notify.success('Correct date. Please click the start button.', {
+        position: 'center-top',
+      });
     } else {
       startBtn.disabled = true;
-      Notiflix.Notify.failure('Please choose a date in the future.');
+      Notiflix.Notify.failure('Please choose a date in the future.', {
+        position: 'center-top',
+      });
       // window.alert('Please choose a date in the future');
     }
   },
@@ -56,6 +60,7 @@ startBtn.addEventListener('click', () => {
       minTimer.textContent = plusZero(convertMs(endDate - new Date()).minutes);
       secTimer.textContent = plusZero(convertMs(endDate - new Date()).seconds);
     } else {
+      Notiflix.Notify.info('TIME IS UP', { position: 'center-top' });
       clearInterval(timer);
     }
   }, 1000);
