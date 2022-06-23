@@ -7,6 +7,7 @@ const startBtn = document.querySelector('[data-start]');
 startBtn.disabled = true;
 
 let endDate;
+let timer;
 
 flatpickr('#datetime-picker', {
   enableTime: true,
@@ -40,18 +41,22 @@ function convertMs(ms) {
 }
 
 startBtn.addEventListener('click', () => {
-  setInterval(() => {
-    document.querySelector('[data-days]').textContent = convertMs(
-      endDate - new Date()
-    ).days;
-    document.querySelector('[data-hours]').textContent = convertMs(
-      endDate - new Date()
-    ).hours;
-    document.querySelector('[data-minutes]').textContent = convertMs(
-      endDate - new Date()
-    ).minutes;
-    document.querySelector('[data-seconds]').textContent = convertMs(
-      endDate - new Date()
-    ).seconds;
+  timer = setInterval(() => {
+    if (endDate - new Date() > 0) {
+      document.querySelector('[data-days]').textContent = convertMs(
+        endDate - new Date()
+      ).days;
+      document.querySelector('[data-hours]').textContent = convertMs(
+        endDate - new Date()
+      ).hours;
+      document.querySelector('[data-minutes]').textContent = convertMs(
+        endDate - new Date()
+      ).minutes;
+      document.querySelector('[data-seconds]').textContent = convertMs(
+        endDate - new Date()
+      ).seconds;
+    } else {
+      clearInterval(timer);
+    }
   }, 1000);
 });
