@@ -9,6 +9,11 @@ startBtn.disabled = true;
 let endDate;
 let timer;
 
+const dayTimer = document.querySelector('[data-days]');
+const hourTimer = document.querySelector('[data-hours]');
+const minTimer = document.querySelector('[data-minutes]');
+const secTimer = document.querySelector('[data-seconds]');
+
 flatpickr('#datetime-picker', {
   enableTime: true,
   time_24hr: true,
@@ -39,22 +44,17 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
   return { days, hours, minutes, seconds };
 }
+function plusZero(num) {
+  return num < 10 ? '0' + num : num;
+}
 
 startBtn.addEventListener('click', () => {
   timer = setInterval(() => {
     if (endDate - new Date() > 0) {
-      document.querySelector('[data-days]').textContent = convertMs(
-        endDate - new Date()
-      ).days;
-      document.querySelector('[data-hours]').textContent = convertMs(
-        endDate - new Date()
-      ).hours;
-      document.querySelector('[data-minutes]').textContent = convertMs(
-        endDate - new Date()
-      ).minutes;
-      document.querySelector('[data-seconds]').textContent = convertMs(
-        endDate - new Date()
-      ).seconds;
+      dayTimer.textContent = plusZero(convertMs(endDate - new Date()).days);
+      hourTimer.textContent = plusZero(convertMs(endDate - new Date()).hours);
+      minTimer.textContent = plusZero(convertMs(endDate - new Date()).minutes);
+      secTimer.textContent = plusZero(convertMs(endDate - new Date()).seconds);
     } else {
       clearInterval(timer);
     }
